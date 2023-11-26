@@ -1,54 +1,23 @@
-document.addEventListener("DOMContentLoaded", function() {
-  const buttonContainer = document.getElementById("buttonContainer");
-  const generateButton = document.getElementById("generateButtons");
+const dictionary = new Set();
 
-  function showMessage(isWinner) {
-    if (isWinner) {
-      alert("Congratulations, you've won!");
+function saveWord() {
+  const wordInput = document.getElementById("wordInput").value.trim();
+  if (wordInput !== "") {
+    dictionary.add(wordInput.toLowerCase());
+    document.getElementById("wordInput").value = "";
+    document.getElementById("message").textContent = `Word "${wordInput}" saved to dictionary.`;
+  }
+}
+
+function searchWord() {
+  const searchInput = document.getElementById("searchInput").value.trim().toLowerCase();
+  if (searchInput !== "") {
+    const message = document.getElementById("message");
+    if (dictionary.has(searchInput)) {
+      message.textContent = `The word "${searchInput}" is in the dictionary.`;
     } else {
-      alert("Sorry, you didn't win.");
+      message.textContent = `The word "${searchInput}" is not in the dictionary.`;
     }
+    document.getElementById("searchInput").value = "";
   }
-
-  function setWinner(button) {
-    button.setAttribute("data-winner", "true");
-  }
-
-  function clearWinner() {
-    const winnerButton = buttonContainer.querySelector("button[data-winner='true']");
-    if (winnerButton) {
-      winnerButton.removeAttribute("data-winner");
-    }
-  }
-
-  function assignWinner(buttons) {
-    clearWinner();
-    const winningButtonIndex = Math.floor(Math.random() * buttons.length);
-    setWinner(buttons[winningButtonIndex]);
-  }
-
-  buttonContainer.addEventListener("click", function(event) {
-    if (event.target.tagName === "BUTTON") {
-      showMessage(event.target.getAttribute("data-winner") === "true");
-    }
-  });
-
-  generateButton.addEventListener("click", function() {
-    const buttonCount = parseInt(document.getElementById("buttonCount").value, 10);
-    if (!isNaN(buttonCount) && buttonCount > 0) {
-      buttonContainer.innerHTML = "";
-      for (let i = 0; i < buttonCount; i++) {
-        const newButton = document.createElement("button");
-        newButton.textContent = `Button ${i + 1}`;
-        buttonContainer.appendChild(newButton);
-      }
-      const buttons = Array.from(buttonContainer.querySelectorAll("button"));
-      assignWinner(buttons);
-    } else {
-      alert("Please enter a valid number to generate buttons!");
-    }
-  });
-
-  const buttons = Array.from(buttonContainer.querySelectorAll("button"));
-  assignWinner(buttons);
-});
+}

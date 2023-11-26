@@ -1,18 +1,19 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Hidden Button</title>
+  <title>Dictionary</title>
 </head>
 <body>
-  <div id="buttonContainer">
-    <button>Button 1</button>
-    <button>Button 2</button>
-    <button>Button 3</button>
-  </div>
-
-  <input type="number" id="buttonCount" placeholder="Number of buttons">
-  <button id="generateButtons">Generate</button>
+  <h1>Dictionary</h1>
+  
+  <input type="text" id="wordInput" placeholder="Enter a word">
+  <button onclick="saveWord()">Save Word</button>
+  <br><br>
+  <input type="text" id="searchInput" placeholder="Search for a word">
+  <button onclick="searchWord()">Search</button>
+  
+  <p id="message"></p>
 
   <script src="script.js"></script>
 </body>
